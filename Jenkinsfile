@@ -2,7 +2,9 @@
 
 @NonCPS
 def getAllCauses() {
-    currentBuild.rawBuild.getCauses().toString()
+    currentBuild.rawBuild.getCauses().collect {
+        it.getClass().getCanonicalName().tokenize('.').last()
+    }
 }
 
 pipeline {
