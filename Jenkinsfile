@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 @NonCPS
-def wasTriggeredByHuman() {
+def wasTriggeredByOrganicLifeForms() {
     currentBuild.rawBuild.getCauses().collect {
         it.getClass().getCanonicalName().tokenize('.').last()
     }.contains('UserIdCause')
@@ -15,7 +15,7 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    echo "${wasTriggeredByHuman() ? 'YES' : 'NO'}"
+                    echo "${wasTriggeredByOrganicLifeForms() ? 'YES' : 'NO'}"
                 }
             }
         }
