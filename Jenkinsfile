@@ -17,5 +17,5 @@ pipeline {
 
 @NonCPS
 def getAllCauses() {
-    return currentBuild.rawBuild.getClauses.toString()
+    return currentBuild.rawBuild.getCauses.toString()
 }
