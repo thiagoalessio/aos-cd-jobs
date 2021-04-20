@@ -1,5 +1,10 @@
 #!/usr/bin/env groovy
 
+@NonCPS
+def getAllCauses() {
+    currentBuild.rawBuild.getCauses().toString()
+}
+
 pipeline {
     agent any
     options { disableResume() }
@@ -13,9 +18,4 @@ pipeline {
             }
         }
     }
-}
-
-@NonCPS
-def getAllCauses() {
-    return currentBuild.rawBuild.getCauses.toString()
 }
