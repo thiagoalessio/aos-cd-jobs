@@ -15,7 +15,7 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    echo getAllCauses()
+                    echo getAllCauses().toString()
                 }
             }
         }
