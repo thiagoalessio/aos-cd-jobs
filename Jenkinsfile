@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 @NonCPS
-def triggeredByHuman?() {
+def wasTriggeredByHuman() {
     currentBuild.rawBuild.getCauses().collect {
         it.getClass().getCanonicalName().tokenize('.').last()
     }.contains('UserIdCause')
@@ -15,7 +15,7 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    echo triggeredByHuman?
+                    echo wasTriggeredByHuman()
                 }
             }
         }
