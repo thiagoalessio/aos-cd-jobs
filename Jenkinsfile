@@ -1,10 +1,10 @@
 #!/usr/bin/env groovy
 
 @NonCPS
-def getAllCauses() {
+def triggeredByHuman?() {
     currentBuild.rawBuild.getCauses().collect {
         it.getClass().getCanonicalName().tokenize('.').last()
-    }
+    }.contains('UserIdCause')
 }
 
 pipeline {
@@ -15,7 +15,7 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    echo getAllCauses().toString()
+                    echo triggeredByHuman?
                 }
             }
         }
