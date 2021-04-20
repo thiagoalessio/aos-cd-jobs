@@ -15,7 +15,7 @@ pipeline {
         stage("Testing") {
             steps {
                 script {
-                    echo wasTriggeredByHuman()
+                    echo "${wasTriggeredByHuman() ? 'YES' : 'NO'}"
                 }
             }
         }
