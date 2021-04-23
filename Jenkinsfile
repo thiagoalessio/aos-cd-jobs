@@ -114,7 +114,7 @@ node {
         ]
     )
 
-    commonlib.checkMock()
+    //commonlib.checkMock()
 
     currentBuild.description = ""
     try {
