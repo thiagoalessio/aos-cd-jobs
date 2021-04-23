@@ -122,14 +122,14 @@ node {
         sshagent(["openshift-bot"]) {
             // To work on private repos, buildlib operations must run
             // with the permissions of openshift-bot
+			stage("set build type") { build.setBuildType() }
+			stage("stop here") {
+				echo params.SCRATCH
+				fail
+			}
 
             lock("github-activity-lock-${params.BUILD_VERSION}") {
                 //stage("initialize") { build.initialize() }
-                stage("set build type") { build.setBuildType() }
-                stage("stop here") {
-                    echo params.SCRATCH
-                    fail
-                }
                 buildlib.assertBuildPermitted(doozerOpts)
                 stage("build RPMs") { build.stageBuildRpms() }
 
