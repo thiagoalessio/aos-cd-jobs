@@ -83,6 +83,11 @@ node {
                         defaultValue: "",
                         trim: true,
                     ),
+                    booleanParam(
+                        name: 'SCRATCH',
+                        description: 'Run scratch builds (only unrelated images, no children)',
+                        defaultValue: false,
+                    ),
                     commonlib.suppressEmailParam(),
                     string(
                         name: 'MAIL_LIST_SUCCESS',
@@ -120,6 +125,7 @@ node {
 
             lock("github-activity-lock-${params.BUILD_VERSION}") {
                 stage("initialize") { build.initialize() }
+                stage("set build type") { build.setBuildType() }
                 buildlib.assertBuildPermitted(doozerOpts)
                 stage("build RPMs") { build.stageBuildRpms() }
 
