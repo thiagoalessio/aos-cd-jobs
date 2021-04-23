@@ -124,7 +124,7 @@ node {
             // with the permissions of openshift-bot
 
             lock("github-activity-lock-${params.BUILD_VERSION}") {
-                stage("initialize") { build.initialize() }
+                //stage("initialize") { build.initialize() }
                 stage("set build type") { build.setBuildType() }
                 stage("stop here") {
                     echo params.SCRATCH
