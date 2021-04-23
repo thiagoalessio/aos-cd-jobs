@@ -2,6 +2,7 @@
 
 buildlib = load("pipeline-scripts/buildlib.groovy")
 commonlib = buildlib.commonlib
+slacklib = commonlib.slacklib
 
 // Properties that should be initialized and not updated
 version = [
@@ -96,7 +97,7 @@ def setBuildType() {
 }
 
 def askBuildType() {
-    commonlib.inputRequired(params.BUILD_VERSION) {
+    commonlib.inputRequired(slacklib.to(params.BUILD_VERSION)) {
         def res = input(
             message: 'What is the purpose of this build?',
             parameters: [
