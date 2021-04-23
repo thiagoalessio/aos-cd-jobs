@@ -118,7 +118,7 @@ node {
     scratch = params.SCRATCH
     stage("set build type") { build.setBuildType() }
     stage("stop here") {
-        echo scratch
+        echo "${scratch}"
         fail
     }
 }
