@@ -116,6 +116,7 @@ node {
 
     commonlib.checkMock()
 
+    scratch = params.SCRATCH
     currentBuild.description = ""
     try {
 

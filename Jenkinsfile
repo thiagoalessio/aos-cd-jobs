@@ -115,9 +115,10 @@ node {
     )
 
     currentBuild.description = ""
+    scratch = params.SCRATCH
     stage("set build type") { build.setBuildType() }
     stage("stop here") {
-        echo params.SCRATCH
+        echo scratch
         fail
     }
 }

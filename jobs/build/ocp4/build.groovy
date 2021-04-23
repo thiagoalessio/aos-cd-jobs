@@ -91,6 +91,7 @@ def initialize() {
 def setBuildType() {
     if (!isTriggeredByOrganicLifeForms()) {
         echo "Assuming *PROD* build, triggered by automation"
+        scratch = false
         return
     }
     askBuildType()
@@ -107,7 +108,7 @@ def askBuildType() {
                  name: 'type']
             ]
         )
-        params.SCRATCH = res == 'TEST'
+        scratch = res == 'TEST'
     }
 }
 
@@ -289,7 +290,7 @@ def stageBuildRpms() {
         ${doozerOpts}
         ${includeExclude "rpms", buildPlan.rpmsIncluded, buildPlan.rpmsExcluded}
         beta:rpms:rebase-and-build --version v${version.full}
-        --release '${version.release}' ${params.SCRATCH ? '--scratch' : ''}
+        --release '${version.release}' ${scratch ? '--scratch' : ''}
         """
 
     buildPlan.dryRun ? echo("doozer ${cmd}") : buildlib.doozer(cmd)
@@ -357,7 +358,7 @@ def stageBuildImages() {
             """
             ${doozerOpts}
             ${includeExclude "images", buildPlan.imagesIncluded, buildPlan.imagesExcluded}
-            images:build ${params.SCRATCH ? '--scratch' : ''}
+            images:build ${scratch ? '--scratch' : ''}
             --repo-type ${signing_mode}
             """
         if(buildPlan.dryRun) {
@@ -479,7 +480,7 @@ def stageSyncImages() {
 }
 
 def stagePushQEImages() {
-    if (params.SCRATCH) { return }
+    if (scratch) { return }
     def cmd =
             """
             ${doozerOpts}
