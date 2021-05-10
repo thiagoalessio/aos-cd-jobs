@@ -1,6 +1,6 @@
 node {
     checkout scm
-    def commonlib = load("pipeline-scripts/commonlib.groovy")
+    commonlib = load("pipeline-scripts/commonlib.groovy")
     commonlib.describeJob("butane_sync", """
         ------------------------------
         Sync Butane binaries to mirror
