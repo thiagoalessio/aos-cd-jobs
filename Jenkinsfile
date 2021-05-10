@@ -100,8 +100,8 @@ pipeline {
                             """
                         )
                     }
+                    sh "rm *.src.rpm && tree ."
                 }
-                sh "tree ./${params.VERSION}"
             }
         }
     }
