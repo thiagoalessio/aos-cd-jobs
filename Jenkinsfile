@@ -74,7 +74,7 @@ pipeline {
             steps {
                 dir("./${params.VERSION}") {
                     script {
-                        if (arches.isEmpty() || arches.contains("noarch") {
+                        if (arches.isEmpty() || arches.contains("noarch")) {
                             commonlib.shell(
                                 script: """
                                 rpm2cpio *.noarch.rpm | cpio -idm ./usr/share/butane-redistributable/*
@@ -83,7 +83,7 @@ pipeline {
                                 """
                             )
                         }
-                        if (arches.isEmpty() || arches.contains("x86_64") {
+                        if (arches.isEmpty() || arches.contains("x86_64")) {
                             commonlib.shell(
                                 script: """
                                 rpm2cpio *.x86_64.rpm | cpio -idm ./usr/bin/butane
@@ -93,7 +93,7 @@ pipeline {
                                 """
                             )
                         }
-                        if (arches.isEmpty() || arches.contains("s390x") {
+                        if (arches.isEmpty() || arches.contains("s390x")) {
                             commonlib.shell(
                                 script: """
                                 rpm2cpio *.s390x.rpm | cpio -idm ./usr/bin/butane
@@ -102,7 +102,7 @@ pipeline {
                                 """
                             )
                         }
-                        if (arches.isEmpty() || arches.contains("ppc64le") {
+                        if (arches.isEmpty() || arches.contains("ppc64le")) {
                             commonlib.shell(
                                 script: """
                                 rpm2cpio *.ppc64le.rpm | cpio -idm ./usr/bin/butane
@@ -111,7 +111,7 @@ pipeline {
                                 """
                             )
                         }
-                        if (arches.isEmpty() || arches.contains("aarch64") {
+                        if (arches.isEmpty() || arches.contains("aarch64")) {
                             commonlib.shell(
                                 script: """
                                 rpm2cpio *.aarch64.rpm | cpio -idm ./usr/bin/butane
