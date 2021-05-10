@@ -1,3 +1,17 @@
+node {
+    checkout scm
+    def commonlib = load("pipeline-scripts/commonlib.groovy")
+    commonlib.describeJob("butane_sync", """
+        ------------------------------
+        Sync Butane binaries to mirror
+        ------------------------------
+        Butane (formerly the Fedora CoreOS Config Transpiler, FCCT)
+        http://mirror.openshift.com/pub/openshift-v4/clients/butane/
+
+        Timing: This is only ever run by humans, upon request.
+    """)
+}
+
 pipeline {
     agent any
     options { disableResume() }
@@ -32,13 +46,17 @@ pipeline {
         }
         stage("download build") {
             steps {
-                sh """
-                    rm -rf ./${params.VERSION} &&\
-                    mkdir -p ./${params.VERSION}" &&\
-                    cd ./${params.VERSION} &&\
-                    brew download-build ${params.NVR} &&\
-                    tree
-                """
+                script {
+                    commonlib.shel(
+                        script: """
+                        rm -rf ./${params.VERSION}
+                        mkdir -p ./${params.VERSION}"
+                        cd ./${params.VERSION}
+                        brew download-build ${params.NVR}
+                        tree
+                        """
+                    )
+                }
             }
         }
     }
