@@ -35,6 +35,7 @@ pipeline {
                          "Defaults to all contained in the RPM.\n",
             defaultValue: "",
             trim: true,
+        )
     }
 
     stages {
@@ -54,7 +55,7 @@ pipeline {
             steps {
                 script {
                     def arches = commonlib.cleanCommaList(params.ARCHES).collect {
-                        "--arch ${it}"
+                        "--arch=${it}"
                     }.join(" ")
 
                     commonlib.shell(
