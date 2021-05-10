@@ -54,9 +54,12 @@ pipeline {
         stage("download build") {
             steps {
                 script {
-                    def arches = commonlib.cleanCommaList(params.ARCHES).collect {
-                        "--arch=${it}"
-                    }.join(" ")
+                    def arches = (
+                        commonlib.cleanCommaList(params.ARCHES)
+                        .split(",")
+                        .collect { "--arch=${it}" }
+                        .join(" ")
+                    )
 
                     commonlib.shell(
                         script: """
