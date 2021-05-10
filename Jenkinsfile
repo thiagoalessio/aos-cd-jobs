@@ -11,7 +11,7 @@ pipeline {
         )
         string(
             name: "VERSION",
-            description: "Desired version name. Example: v0.11.0"
+            description: "Desired version name. Example: v0.11.0",
             defaultValue: "",
             trim: true,
         )
