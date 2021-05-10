@@ -111,7 +111,7 @@ pipeline {
         }
         stage("sync to mirror") {
             steps {
-                sh "tree -fa ./${params.VERSION} && cat ./${params.VERSION}/sha256sum.txt"
+                sh "tree ./${params.VERSION} && cat ./${params.VERSION}/sha256sum.txt"
                 // sshagent(["aos-cd-test"]) {
                 //     sh "ssh use-mirror-upload.ops.rhcloud.com -- mkdir -p /srv/pub/openshift-v4/clients/butane"
                 //     sh "scp -r./ ${params.VERSION} use-mirror-upload.ops.rhcloud.com:/srv/pub/openshift-v4/clients/butane/"
