@@ -29,6 +29,12 @@ pipeline {
             defaultValue: "",
             trim: true,
         )
+        string(
+            name: "ARCHES",
+            description: "Arches to extract from the brew build.\n" +
+                         "Defaults to all contained in the RPM.\n",
+            defaultValue: "",
+            trim: true,
     }
 
     stages {
@@ -47,12 +53,16 @@ pipeline {
         stage("download build") {
             steps {
                 script {
+                    def arches = commonlib.cleanCommaList(params.ARCHES).collect {
+                        "--arch ${it}"
+                    }.join(" ")
+
                     commonlib.shell(
                         script: """
                         rm -rf ./${params.VERSION}
                         mkdir -p ./${params.VERSION}
                         cd ./${params.VERSION}
-                        brew download-build ${params.NVR}
+                        brew download-build ${params.NVR} ${arches}
                         tree
                         """
                     )
