@@ -50,7 +50,7 @@ pipeline {
                     commonlib.shell(
                         script: """
                         rm -rf ./${params.VERSION}
-                        mkdir -p ./${params.VERSION}"
+                        mkdir -p ./${params.VERSION}
                         cd ./${params.VERSION}
                         brew download-build ${params.NVR}
                         tree
