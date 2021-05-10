@@ -63,7 +63,7 @@ pipeline {
                         rm -rf ./${params.VERSION}
                         mkdir -p ./${params.VERSION}
                         cd ./${params.VERSION}
-                        brew download-build ${params.NVR} ${archesParam}
+                        brew download-build ${params.NVR} ${archesParams}
                         tree
                         """
                     )
