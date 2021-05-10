@@ -31,8 +31,9 @@ pipeline {
         )
         string(
             name: "ARCHES",
-            description: "Arches to extract from the brew build.\n" +
-                         "Defaults to all contained in the RPM.\n",
+            description: "Arches to extract from the brew build.<br/>" +
+                         "Defaults to all contained in the RPM.<br/>" +
+                         "windows-amd64 and darwin-amd64 are present in arch \"noarch\".",
             defaultValue: "",
             trim: true,
         )
@@ -54,23 +55,24 @@ pipeline {
         stage("download build") {
             steps {
                 script {
-                    def arches = (
-                        commonlib.cleanCommaList(params.ARCHES)
-                        .split(",")
-                        .collect { "--arch=${it}" }
-                        .join(" ")
-                    )
+                    arches = commonlib.cleanCommaList(params.ARCHES).split(",")
+                    def archesParams = arches.collect { "--arch=${it}" }.join(" ")
 
                     commonlib.shell(
                         script: """
                         rm -rf ./${params.VERSION}
                         mkdir -p ./${params.VERSION}
                         cd ./${params.VERSION}
-                        brew download-build ${params.NVR} ${arches}
+                        brew download-build ${params.NVR} ${archesParam}
                         tree
                         """
                     )
                 }
+            }
+        }
+        stage("extract binaries") {
+            steps {
+                echo "${arches}"
             }
         }
     }
