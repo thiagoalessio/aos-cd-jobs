@@ -47,7 +47,7 @@ pipeline {
         stage("download build") {
             steps {
                 script {
-                    commonlib.shel(
+                    commonlib.shell(
                         script: """
                         rm -rf ./${params.VERSION}
                         mkdir -p ./${params.VERSION}"
