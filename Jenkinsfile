@@ -72,7 +72,57 @@ pipeline {
         }
         stage("extract binaries") {
             steps {
-                echo "${arches}"
+                dir("./${params.VERSION}") {
+                    script {
+                        if (arches.isEmpty() || arches.contains("noarch") {
+                            commonlib.shell(
+                                script: """
+                                rpm2cpio *.noarch.rpm | cpio -idm ./usr/share/butane-redistributable/*
+                                mv ./usr/share/butane-redistributable/* .
+                                rm -rf *.noarch.rpm ./usr
+                                """
+                            )
+                        }
+                        if (arches.isEmpty() || arches.contains("x86_64") {
+                            commonlib.shell(
+                                script: """
+                                rpm2cpio *.x86_64.rpm | cpio -idm ./usr/bin/butane
+                                mv ./usr/bin/butane ./butane_amd64
+                                ln -s ./butane_amd64 ./butane
+                                rm -rf *.x86_64.rpm ./usr
+                                """
+                            )
+                        }
+                        if (arches.isEmpty() || arches.contains("s390x") {
+                            commonlib.shell(
+                                script: """
+                                rpm2cpio *.s390x.rpm | cpio -idm ./usr/bin/butane
+                                mv ./usr/bin/butane ./butane_s390x
+                                rm -rf *.s390x.rpm ./usr
+                                """
+                            )
+                        }
+                        if (arches.isEmpty() || arches.contains("ppc64le") {
+                            commonlib.shell(
+                                script: """
+                                rpm2cpio *.ppc64le.rpm | cpio -idm ./usr/bin/butane
+                                mv ./usr/bin/butane ./butane_ppc64le
+                                rm -rf *.ppc64le.rpm ./usr
+                                """
+                            )
+                        }
+                        if (arches.isEmpty() || arches.contains("aarch64") {
+                            commonlib.shell(
+                                script: """
+                                rpm2cpio *.aarch64.rpm | cpio -idm ./usr/bin/butane
+                                mv ./usr/bin/butane ./butane_aarch64
+                                rm -rf *.aarch64.rpm ./usr
+                                """
+                            )
+                        }
+                    }
+                }
+                sh "tree ./${params.VERSION}"
             }
         }
     }
